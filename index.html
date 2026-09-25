@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Use Declaration</title>
 
 <style>
@@ -9,21 +10,12 @@ body {
     font-family: Arial, sans-serif;
     max-width: 800px;
     margin: 20px auto;
+    padding: 0 15px;
     line-height: 1.5;
 }
 
-.section {
-    margin-bottom: 15px;
-}
-
-textarea {
-    width: 100%;
-    min-height: 80px;
-    resize: vertical;
-}
-
-.hidden {
-    display: none;
+h2 {
+    margin-bottom: 10px;
 }
 
 .instructions {
@@ -33,35 +25,63 @@ textarea {
     margin-bottom: 20px;
 }
 
+.section {
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 90px;
+    padding: 8px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
 button {
     padding: 10px 16px;
-    margin-top: 10px;
     cursor: pointer;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none;
 }
 
 #result {
-    min-height: 200px;
+    min-height: 180px;
+    font-family: inherit;
+}
+
+.checkbox-group label {
+    display: block;
+    margin: 4px 0;
 }
 </style>
 </head>
 
 <body>
 
-<h2>AI Use Declaration for This Assignment</h2>
+<h2>AI Use Declaration</h2>
 
 <div class="instructions">
-    <strong>Instructions</strong>
+    <strong>Before submitting your assignment:</strong>
     <ol>
-        <li>Answer the questions below.</li>
+        <li>Complete this form.</li>
         <li>Click <strong>Generate Statement</strong>.</li>
         <li>Click <strong>Copy to Clipboard</strong>.</li>
-        <li>When submitting your assignment in Brightspace, paste the statement into the <strong>Comments</strong> box.</li>
+        <li>Paste the statement into the <strong>Comments</strong> box when submitting in Brightspace.</li>
         <li>Submit your assignment normally.</li>
     </ol>
 </div>
 
 <div class="section">
-    <strong>Did you use any AI tool while working on this assignment?</strong><br>
+    <strong>Did you use AI while working on this assignment?</strong><br><br>
 
     <label>
         <input type="radio" name="aiUsed" value="No" checked onclick="toggleAI(false)">
@@ -77,49 +97,64 @@ button {
 <div id="aiSection" class="hidden">
 
     <div class="section">
-        <label><strong>Which AI tool(s) did you use?</strong></label>
-        <input type="text" id="tools" style="width:100%;"
-               placeholder="Example: Copilot, ChatGPT, Gemini">
+        <label><strong>AI Tool(s) Used</strong></label>
+        <input
+            type="text"
+            id="tools"
+            placeholder="Example: Copilot, ChatGPT, Gemini">
     </div>
 
     <div class="section">
-        <strong>How did you use AI? (Check all that apply)</strong><br>
+        <strong>How did you use AI? (Check all that apply)</strong>
 
-        <label><input type="checkbox" class="usage" value="Brainstorming ideas"> Brainstorming ideas</label><br>
-        <label><input type="checkbox" class="usage" value="Creating an outline"> Creating an outline</label><br>
-        <label><input type="checkbox" class="usage" value="Research support"> Research support</label><br>
-        <label><input type="checkbox" class="usage" value="Understanding concepts"> Understanding concepts</label><br>
-        <label><input type="checkbox" class="usage" value="Grammar or spelling feedback"> Grammar or spelling feedback</label><br>
-        <label><input type="checkbox" class="usage" value="Improving organization"> Improving organization</label><br>
-        <label><input type="checkbox" class="usage" value="Generating text used in the assignment"> Generating text used in the assignment</label><br>
-        <label><input type="checkbox" class="usage" value="Generating images or media"> Generating images or media</label><br>
+        <div class="checkbox-group">
+            <label><input type="checkbox" class="usage" value="Brainstorming ideas"> Brainstorming ideas</label>
+            <label><input type="checkbox" class="usage" value="Creating an outline"> Creating an outline</label>
+            <label><input type="checkbox" class="usage" value="Research support"> Research support</label>
+            <label><input type="checkbox" class="usage" value="Understanding concepts"> Understanding concepts</label>
+            <label><input type="checkbox" class="usage" value="Grammar or spelling feedback"> Grammar or spelling feedback</label>
+            <label><input type="checkbox" class="usage" value="Improving organization"> Improving organization</label>
+            <label><input type="checkbox" class="usage" value="Generating text used in the assignment"> Generating text used in the assignment</label>
+            <label><input type="checkbox" class="usage" value="Generating images or media"> Generating images or media</label>
+        </div>
     </div>
 
     <div class="section">
-        <label><strong>What parts of this assignment are entirely your own work?</strong></label>
-        <textarea id="original"></textarea>
-    </div>
+        <label>
+            <strong>Explain what you completed yourself and what AI helped with.</strong>
+        </label>
 
-    <div class="section">
-        <label><strong>Briefly explain how AI influenced your work.</strong></label>
-        <textarea id="influence"
-            placeholder="Example: I used Copilot to brainstorm possible topics and check grammar, but all final writing was completed by me."></textarea>
+        <textarea
+            id="explanation"
+            maxlength="300"
+            placeholder="Example: I wrote the entire essay myself. I used Copilot to brainstorm topic ideas and check grammar."></textarea>
     </div>
 
 </div>
 
-<button onclick="generateStatement()">Generate Statement</button>
+<button onclick="generateStatement()">
+    Generate Statement
+</button>
 
 <div class="section">
-    <label><strong>Copy this into the Brightspace Comments box:</strong></label>
-    <textarea id="result" readonly></textarea><br>
-    <button onclick="copyResult()">Copy to Clipboard</button>
+    <label>
+        <strong>Copy this into the Brightspace Comments box:</strong>
+    </label>
+
+    <textarea id="result" readonly></textarea>
+
+    <br>
+
+    <button onclick="copyResult()">
+        Copy to Clipboard
+    </button>
 </div>
 
 <script>
 
 function toggleAI(show) {
-    document.getElementById("aiSection").classList.toggle("hidden", !show);
+    document.getElementById("aiSection")
+        .classList.toggle("hidden", !show);
 }
 
 function generateStatement() {
@@ -136,19 +171,15 @@ function generateStatement() {
 
 I did not use AI tools while completing this assignment.
 
-Student Attestation:
-I confirm that this submission represents my own work.`;
+I confirm this submission is my own work.`;
 
     } else {
 
         const tools =
             document.getElementById("tools").value.trim();
 
-        const original =
-            document.getElementById("original").value.trim();
-
-        const influence =
-            document.getElementById("influence").value.trim();
+        const explanation =
+            document.getElementById("explanation").value.trim();
 
         const uses =
             Array.from(document.querySelectorAll('.usage:checked'))
@@ -157,20 +188,15 @@ I confirm that this submission represents my own work.`;
         statement =
 `AI USE DECLARATION
 
-AI Tool(s) Used:
-${tools || "Not specified"}
+AI Used: Yes
+Tool(s): ${tools || "Not specified"}
+Purpose: ${uses.length ? uses.join(", ") : "Not specified"}
 
-How AI Was Used:
-${uses.length ? uses.map(item => "- " + item).join("\n") : "- Not specified"}
+Statement:
+${explanation || "Not specified"}
 
-My Original Work:
-${original || "Not specified"}
+I reviewed all AI-assisted content and take responsibility for this submission.`;
 
-Explanation of AI Use:
-${influence || "Not specified"}
-
-Student Attestation:
-I reviewed any AI-generated content that I used and take responsibility for the final submission.`;
     }
 
     document.getElementById("result").value = statement;
@@ -178,14 +204,15 @@ I reviewed any AI-generated content that I used and take responsibility for the 
 
 function copyResult() {
 
-    const result = document.getElementById("result");
+    const result =
+        document.getElementById("result");
 
     result.select();
     result.setSelectionRange(0, 99999);
 
     navigator.clipboard.writeText(result.value);
 
-    alert("Statement copied. Paste it into the Brightspace Comments box when submitting.");
+    alert("Statement copied. Paste it into the Brightspace Comments box.");
 }
 
 </script>
