@@ -2,10 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
+<!-- Ensures proper scaling on phones, tablets, and Chromebooks -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>AI Use Declaration</title>
 
 <style>
+
+/* ---------------------------
+   PAGE LAYOUT
+   --------------------------- */
+
 body {
     font-family: Arial, sans-serif;
     max-width: 800px;
@@ -18,6 +26,7 @@ h2 {
     margin-bottom: 10px;
 }
 
+/* Instruction box at the top */
 .instructions {
     background: #f4f8ff;
     border-left: 4px solid #2563eb;
@@ -25,10 +34,12 @@ h2 {
     margin-bottom: 20px;
 }
 
+/* General spacing between sections */
 .section {
     margin-bottom: 20px;
 }
 
+/* Text areas */
 textarea {
     width: 100%;
     min-height: 90px;
@@ -37,31 +48,37 @@ textarea {
     resize: vertical;
 }
 
+/* Single-line text inputs */
 input[type="text"] {
     width: 100%;
     padding: 8px;
     box-sizing: border-box;
 }
 
+/* Buttons */
 button {
     padding: 10px 16px;
     cursor: pointer;
     margin-top: 10px;
 }
 
+/* Used to hide AI-related questions until "Yes" is selected */
 .hidden {
     display: none;
 }
 
+/* Generated statement output box */
 #result {
-    min-height: 180px;
+    min-height: 140px;
     font-family: inherit;
 }
 
+/* Place each checkbox on its own line */
 .checkbox-group label {
     display: block;
     margin: 4px 0;
 }
+
 </style>
 </head>
 
@@ -69,6 +86,12 @@ button {
 
 <h2>AI Use Declaration</h2>
 
+<!--
+    Instructions for students.
+
+    Feel free to customize these steps if your LMS or
+    assignment submission process changes.
+-->
 <div class="instructions">
     <strong>Before submitting your assignment:</strong>
     <ol>
@@ -80,65 +103,146 @@ button {
     </ol>
 </div>
 
+<!--
+    Initial AI use question.
+
+    Students indicate whether they used AI at all.
+-->
 <div class="section">
-    <strong>Did you use AI while working on this assignment?</strong><br><br>
+    <strong>Did you use AI while working on this assignment?</strong>
+    <br><br>
 
     <label>
-        <input type="radio" name="aiUsed" value="No" checked onclick="toggleAI(false)">
+        <input
+            type="radio"
+            name="aiUsed"
+            value="No"
+            checked
+            onclick="toggleAI(false)">
         No
     </label>
 
     <label style="margin-left:20px;">
-        <input type="radio" name="aiUsed" value="Yes" onclick="toggleAI(true)">
+        <input
+            type="radio"
+            name="aiUsed"
+            value="Yes"
+            onclick="toggleAI(true)">
         Yes
     </label>
 </div>
 
+<!--
+    This section is hidden by default.
+    It appears only when "Yes" is selected.
+-->
 <div id="aiSection" class="hidden">
 
+    <!-- AI tools used -->
     <div class="section">
         <label><strong>AI Tool(s) Used</strong></label>
+
         <input
             type="text"
             id="tools"
             placeholder="Example: Copilot, ChatGPT, Gemini">
     </div>
 
+    <!--
+        Checkbox list.
+
+        Teachers can add, remove, or rename options
+        by editing the value and label text.
+    -->
     <div class="section">
         <strong>How did you use AI? (Check all that apply)</strong>
 
         <div class="checkbox-group">
-            <label><input type="checkbox" class="usage" value="Brainstorming ideas"> Brainstorming ideas</label>
-            <label><input type="checkbox" class="usage" value="Creating an outline"> Creating an outline</label>
-            <label><input type="checkbox" class="usage" value="Research support"> Research support</label>
-            <label><input type="checkbox" class="usage" value="Understanding concepts"> Understanding concepts</label>
-            <label><input type="checkbox" class="usage" value="Grammar or spelling feedback"> Grammar or spelling feedback</label>
-            <label><input type="checkbox" class="usage" value="Improving organization"> Improving organization</label>
-            <label><input type="checkbox" class="usage" value="Generating text used in the assignment"> Generating text used in the assignment</label>
-            <label><input type="checkbox" class="usage" value="Generating images or media"> Generating images or media</label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Brainstorming ideas">
+                Brainstorming ideas
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Creating an outline">
+                Creating an outline
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Research support">
+                Research support
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Understanding concepts">
+                Understanding concepts
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Grammar or spelling feedback">
+                Grammar or spelling feedback
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Improving organization">
+                Improving organization
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Generating text used in the assignment">
+                Generating text used in the assignment
+            </label>
+
+            <label>
+                <input type="checkbox" class="usage"
+                    value="Generating images or media">
+                Generating images or media
+            </label>
+
         </div>
     </div>
 
+    <!--
+        Single explanation box.
+
+        Student explains what was their own work
+        and what AI helped with.
+    -->
     <div class="section">
         <label>
-            <strong>Explain what you completed yourself and what AI helped with.</strong>
+            <strong>
+                Explain what you completed yourself and what AI helped with.
+            </strong>
         </label>
 
         <textarea
             id="explanation"
             maxlength="300"
-            placeholder="Example: I wrote the entire essay myself. I used Copilot to brainstorm topic ideas and check grammar."></textarea>
+            placeholder="Example: I wrote the entire essay myself. I used Copilot to brainstorm ideas and check grammar."></textarea>
     </div>
 
 </div>
 
+<!-- Generate disclosure statement -->
 <button onclick="generateStatement()">
     Generate Statement
 </button>
 
+<!-- Output area -->
 <div class="section">
+
     <label>
-        <strong>Copy this into the Brightspace Comments box:</strong>
+        <strong>
+            Copy this into the Brightspace Comments box:
+        </strong>
     </label>
 
     <textarea id="result" readonly></textarea>
@@ -148,60 +252,85 @@ button {
     <button onclick="copyResult()">
         Copy to Clipboard
     </button>
+
 </div>
 
 <script>
 
+/* ------------------------------------
+   Show or hide AI-specific questions.
+   ------------------------------------ */
 function toggleAI(show) {
+
     document.getElementById("aiSection")
         .classList.toggle("hidden", !show);
+
 }
 
+/* ------------------------------------
+   Generate disclosure statement.
+   ------------------------------------ */
 function generateStatement() {
 
     const aiUsed =
-        document.querySelector('input[name="aiUsed"]:checked').value;
+        document.querySelector(
+            'input[name="aiUsed"]:checked'
+        ).value;
 
     let statement = "";
 
+    /* Student selected NO AI */
     if (aiUsed === "No") {
 
         statement =
 `AI USE DECLARATION
-
-I did not use AI tools while completing this assignment.
-
+AI Used: No
+Statement: I did not use AI tools while completing this assignment.
 I confirm this submission is my own work.`;
 
-    } else {
+    }
+
+    /* Student selected YES AI */
+    else {
 
         const tools =
-            document.getElementById("tools").value.trim();
+            document.getElementById("tools")
+                .value
+                .trim();
 
         const explanation =
-            document.getElementById("explanation").value.trim();
+            document.getElementById("explanation")
+                .value
+                .trim();
 
+        /* Collect checked uses */
         const uses =
-            Array.from(document.querySelectorAll('.usage:checked'))
+            Array.from(
+                document.querySelectorAll(
+                    '.usage:checked'
+                )
+            )
             .map(box => box.value);
 
         statement =
 `AI USE DECLARATION
-
 AI Used: Yes
 Tool(s): ${tools || "Not specified"}
 Purpose: ${uses.length ? uses.join(", ") : "Not specified"}
-
-Statement:
-${explanation || "Not specified"}
-
+Statement: ${explanation || "Not specified"}
 I reviewed all AI-assisted content and take responsibility for this submission.`;
 
     }
 
-    document.getElementById("result").value = statement;
+    /* Place generated text into output box */
+    document.getElementById("result").value =
+        statement;
 }
 
+
+/* ------------------------------------
+   Copy statement to clipboard.
+   ------------------------------------ */
 function copyResult() {
 
     const result =
@@ -210,9 +339,14 @@ function copyResult() {
     result.select();
     result.setSelectionRange(0, 99999);
 
-    navigator.clipboard.writeText(result.value);
+    navigator.clipboard.writeText(
+        result.value
+    );
 
-    alert("Statement copied. Paste it into the Brightspace Comments box.");
+    alert(
+        "Statement copied. Paste it into the Brightspace Comments box."
+    );
+
 }
 
 </script>
