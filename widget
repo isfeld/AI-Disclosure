@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI Use Declaration</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 20px auto;
+    line-height: 1.5;
+}
+
+.section {
+    margin-bottom: 15px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.hidden {
+    display: none;
+}
+
+.instructions {
+    background: #f4f8ff;
+    border-left: 4px solid #2563eb;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 16px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#result {
+    min-height: 200px;
+}
+</style>
+</head>
+
+<body>
+
+<h2>AI Use Declaration for This Assignment</h2>
+
+<div class="instructions">
+    <strong>Instructions</strong>
+    <ol>
+        <li>Answer the questions below.</li>
+        <li>Click <strong>Generate Statement</strong>.</li>
+        <li>Click <strong>Copy to Clipboard</strong>.</li>
+        <li>When submitting your assignment in Brightspace, paste the statement into the <strong>Comments</strong> box.</li>
+        <li>Submit your assignment normally.</li>
+    </ol>
+</div>
+
+<div class="section">
+    <strong>Did you use any AI tool while working on this assignment?</strong><br>
+
+    <label>
+        <input type="radio" name="aiUsed" value="No" checked onclick="toggleAI(false)">
+        No
+    </label>
+
+    <label style="margin-left:20px;">
+        <input type="radio" name="aiUsed" value="Yes" onclick="toggleAI(true)">
+        Yes
+    </label>
+</div>
+
+<div id="aiSection" class="hidden">
+
+    <div class="section">
+        <label><strong>Which AI tool(s) did you use?</strong></label>
+        <input type="text" id="tools" style="width:100%;"
+               placeholder="Example: Copilot, ChatGPT, Gemini">
+    </div>
+
+    <div class="section">
+        <strong>How did you use AI? (Check all that apply)</strong><br>
+
+        <label><input type="checkbox" class="usage" value="Brainstorming ideas"> Brainstorming ideas</label><br>
+        <label><input type="checkbox" class="usage" value="Creating an outline"> Creating an outline</label><br>
+        <label><input type="checkbox" class="usage" value="Research support"> Research support</label><br>
+        <label><input type="checkbox" class="usage" value="Understanding concepts"> Understanding concepts</label><br>
+        <label><input type="checkbox" class="usage" value="Grammar or spelling feedback"> Grammar or spelling feedback</label><br>
+        <label><input type="checkbox" class="usage" value="Improving organization"> Improving organization</label><br>
+        <label><input type="checkbox" class="usage" value="Generating text used in the assignment"> Generating text used in the assignment</label><br>
+        <label><input type="checkbox" class="usage" value="Generating images or media"> Generating images or media</label><br>
+    </div>
+
+    <div class="section">
+        <label><strong>What parts of this assignment are entirely your own work?</strong></label>
+        <textarea id="original"></textarea>
+    </div>
+
+    <div class="section">
+        <label><strong>Briefly explain how AI influenced your work.</strong></label>
+        <textarea id="influence"
+            placeholder="Example: I used Copilot to brainstorm possible topics and check grammar, but all final writing was completed by me."></textarea>
+    </div>
+
+</div>
+
+<button onclick="generateStatement()">Generate Statement</button>
+
+<div class="section">
+    <label><strong>Copy this into the Brightspace Comments box:</strong></label>
+    <textarea id="result" readonly></textarea><br>
+    <button onclick="copyResult()">Copy to Clipboard</button>
+</div>
+
+<script>
+
+function toggleAI(show) {
+    document.getElementById("aiSection").classList.toggle("hidden", !show);
+}
+
+function generateStatement() {
+
+    const aiUsed =
+        document.querySelector('input[name="aiUsed"]:checked').value;
+
+    let statement = "";
+
+    if (aiUsed === "No") {
+
+        statement =
+`AI USE DECLARATION
+
+I did not use AI tools while completing this assignment.
+
+Student Attestation:
+I confirm that this submission represents my own work.`;
+
+    } else {
+
+        const tools =
+            document.getElementById("tools").value.trim();
+
+        const original =
+            document.getElementById("original").value.trim();
+
+        const influence =
+            document.getElementById("influence").value.trim();
+
+        const uses =
+            Array.from(document.querySelectorAll('.usage:checked'))
+            .map(box => box.value);
+
+        statement =
+`AI USE DECLARATION
+
+AI Tool(s) Used:
+${tools || "Not specified"}
+
+How AI Was Used:
+${uses.length ? uses.map(item => "- " + item).join("\n") : "- Not specified"}
+
+My Original Work:
+${original || "Not specified"}
+
+Explanation of AI Use:
+${influence || "Not specified"}
+
+Student Attestation:
+I reviewed any AI-generated content that I used and take responsibility for the final submission.`;
+    }
+
+    document.getElementById("result").value = statement;
+}
+
+function copyResult() {
+
+    const result = document.getElementById("result");
+
+    result.select();
+    result.setSelectionRange(0, 99999);
+
+    navigator.clipboard.writeText(result.value);
+
+    alert("Statement copied. Paste it into the Brightspace Comments box when submitting.");
+}
+
+</script>
+
+</body>
+</html>
